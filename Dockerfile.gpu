@@ -195,7 +195,10 @@ RUN	git clone https://github.com/tensorflow/models.git && \
 #add tf model directory to python path RUN
 	echo 'export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim' >> ~/.bashrc
 
-
+#allow x11 forwarding to remote host
+RUN echo "ForwardX11 yes" >> /etc/ssh/ssh_config  && \
+    echo "X11Forwarding yes" >>/etc/ssh/ssh_config  && \
+    echo "alias startWebcam='cd /root/sharedDockerFiles/models/object_detection/ && python3 /root/sharedDockerFiles/models/object_detection/object_detection_webcam_py3.py'" >> ~/.bashrc
 
 # Set up notebook config
 COPY jupyter_notebook_config.py /root/.jupyter/

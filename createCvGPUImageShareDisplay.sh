@@ -1,4 +1,5 @@
-sudo nvidia-docker run -it \
+sudo nvidia-docker run -it -d \
+    --net=host \
     --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
@@ -7,6 +8,6 @@ sudo nvidia-docker run -it \
     --volume="/etc/machine-id:/etc/machine-id" \
     palebone/tf-opencv-docker-gpu:version01 \
     bash 
-sudo export containerId=$(docker ps -l -q)
+export containerId=$(docker ps -l -q)
 sudo xhost +local:`sudo nvidia-docker inspect --format='{{ .Config.Hostname }}' $containerId`
 sudo nvidia-docker start $containerId
